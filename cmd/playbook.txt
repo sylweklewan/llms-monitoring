@@ -1,0 +1,56 @@
+#Playbook command line
+ollama ps
+ollama pull deepseek-r1:8b
+ollama list
+ollama run deepseek-r1:8b "Tell me a story for kids in 5000 words" --hidethinking
+ollama ps
+pgrep -a ollama
+pgrep -af '/usr/local/bin/ollama runner'
+top -p $(pgrep -f '/usr/local/bin/ollama runner') -H
+free -ght
+nividia-smi
+nvtop
+nvitop
+
+#Playbook docker
+docker ps
+docker run -d --runtime=nvidia --gpus all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+watch "docker stats --no-stream"
+docker inspect ollama | grep IPAddress
+curl http://172.17.0.2:11434/api/pull -d '{ "model": "deepseek-r1:14b" }'
+curl http://172.17.0.2:11434/api/generate -d '{"model":"deepseek-r1:14b", "prompt":"Tell me a story for kids in 5000 words", "stream": false}'
+docker exec ollama  ollama ps
+docker exec -it ollama sh
+top
+ollama ps
+nvidia-smi
+
+
+#Plabook setup mig
+
+nvidia-smi
+
+# profiles
+sudo nvidia-smi mig -lgip
+
+# enable mig:
+sudo nvidia-smi -i 0 -mig 1
+
+# enable pm
+sudo nvidia-smi -i 0 -pm 1
+
+# split
+sudo nvidia-smi mig -cgi 1g.20gb
+sudo nvidia-smi mig -cgi 1g.20gb
+sudo nvidia-smi mig -cgi 1g.20gb
+sudo nvidia-smi mig -cgi 1g.20gb
+
+#create compute devices
+sudo nvidia-smi mig -cci -i 0
+
+# compute devices
+sudo nvidia-smi mig -lci
+
+# list after split
+sudo nvidia-smi mig -lgi
+nvidia-smi -L
