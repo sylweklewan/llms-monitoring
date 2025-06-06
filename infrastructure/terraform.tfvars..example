@@ -1,0 +1,7 @@
+kubernetes_api_config="/home/root/.kube/conf"
+target_host = "196.10.2.1"
+mode = "gpu-multiple"
+private_key_path = "~/.keys/pub.pem"
+ssh_user = "ec2-user"
+ssh_port = 22
+port_to_access_prometheus = 30090
