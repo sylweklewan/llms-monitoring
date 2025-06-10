@@ -23,7 +23,6 @@ resource "kubernetes_deployment" "ollama" {
       metadata {
         labels = {
           app = "ollama-${var.model_size}"
-          exposes = "nvitop"
         }
       }
 
@@ -38,7 +37,7 @@ resource "kubernetes_deployment" "ollama" {
         }
 
         container {
-          name = "ollama-otel-gpu-collector"
+          name = "ollama"
           image = "sylweklewan/ollama-with-model:latest"
           image_pull_policy = "Always"
 
@@ -50,11 +49,6 @@ resource "kubernetes_deployment" "ollama" {
           port {
             container_port = 11434
           }
-
-          env {
-             name = "PASS_DEVICE_SPECS"
-             value = "true"
-           }
 
           env {
              name = "MODEL_NAME"

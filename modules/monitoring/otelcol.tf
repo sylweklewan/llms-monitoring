@@ -5,7 +5,7 @@ resource "kubernetes_config_map" "otel_collector_config" {
   }
 
   data = {
-    "config.yaml" = file("${path.module}/otel-config-nvitop.yaml")
+    "config.yaml" = file("${path.module}/otel-config.yaml")
   }
 }
 

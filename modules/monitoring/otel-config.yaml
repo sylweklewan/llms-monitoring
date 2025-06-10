@@ -5,33 +5,6 @@ receivers:
         - job_name: 'dcgm-exporter'
           static_configs:
             - targets: ['dcgm-exporter-svc.default.svc.cluster.local:9400']
-        - job_name: 'nvitop'
-          kubernetes_sd_configs:
-            - role: pod
-          relabel_configs:
-            # Match pods with label exposes="nvitop"
-            - source_labels: [__meta_kubernetes_pod_label_exposes]
-              regex: nvitop
-              action: keep
-
-            # Use pod IP + hardcoded port 5050
-            - source_labels: [__meta_kubernetes_pod_ip]
-              target_label: __address__
-              replacement: $1:5050
-
-            # Optionally keep useful labels
-            - source_labels: [__meta_kubernetes_pod_name]
-              target_label: pod
-
-            - source_labels: [__meta_kubernetes_namespace]
-              target_label: namespace
-
-            - target_label: job
-              replacement: nvitop
-
-            # Remove noisy metadata labels
-            - action: labeldrop
-              regex: __meta_kubernetes.*
   otlp:
     protocols:
       grpc:
